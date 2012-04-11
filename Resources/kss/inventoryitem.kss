@@ -1,0 +1,21 @@
+.inventoryitem {
+	width: 100dp
+	height: 30dp
+	background-color: red
+	layout: vertical
+}
+
+.usednumber, .totalnumber {
+	width: 15dp
+	height: 15dp
+}
+
+.usedlabel, .totallabel {
+	width: 15dp
+	height: 15dp
+	fontSize: 10dp
+}
+
+.divider {
+	width: 5dp
+}

@@ -1,0 +1,7 @@
+.itemicon {
+	height: 20dp
+	width: 20dp
+	border-size: 1dp
+	border-color: black
+	background-color: red
+}
