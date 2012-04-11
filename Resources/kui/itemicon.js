@@ -5,7 +5,7 @@ Itemobject has:
  - kind  (0-2, corresponding to unit/gear/spell)
  - name
 	*/
-	className: "itemicon",
+	cls: "itemicon",
 	init: function(item) {
 		this.children = ["label "+item.name];
 		this._super.call(this, item);

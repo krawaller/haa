@@ -59,14 +59,14 @@ orderdesc: true/false
 function dbDex(opts){
 	var props = opts.props, sql = "SELECT "+props.join(",")+" FROM "+opts.table;
 	if (opts.condstr){
-		sql += " WHERE " + opts.condstr
+		sql += " WHERE " + opts.condstr;
 	}
 	if (opts.orderby){
 		sql+= " ORDER BY "+opts.orderby+" "+(opts.orderdesc?"DESC":"ASC");
 	}
 	var mould = {};
 	for (var i=0; i<props.length;i++){
-		mould[props[i]] = props[i]
+		mould[props[i]] = props[i];
 	};
 	return dbQuery(sql,mould);
 }
@@ -74,17 +74,27 @@ function dbDex(opts){
 var DBNAME = "HAA 005",
 	db = Titanium.Database.install("/cogs/heroacademyaid.sqlite", DBNAME);
 
+var datatypes = {
+	gameswithopp: ["gameid","oppname","myrace","opprace","status","gamenote","oppnote","prio"],
+	gameswithusesoverview: ["gameid","oppname","myrace","opprace","status","gamenote","oppnote","prio","myused","mytotal","oppused","opptotal"],
+	gamestocks: ["gameid","race","home","isme","kind","name","itemid","total","used","note","prio"]
+};
+
 exports.db = db;
 
+function getItems(datatype,opts){
+	opts = opts || {};
+	opts.props = datatypes[datatype]; 
+	opts.table = datatype;
+	return dbDex(opts);
+};
+
 exports.getCurrentGames = function() {
-	o = {
-		table: "gameswithopp",
-		props: ["gameid","oppname","myrace","opprace","status","gamenote","oppnote","prio"],
+	return getItems("games withopp",{
 		condstr: "status = 0",
 		orderby: "prio",
 		orderdesc: true
-	};
-	return dbDex(o);
+	});
 };
 
 exports.poop = "scoop";

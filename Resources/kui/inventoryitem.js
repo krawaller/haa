@@ -8,6 +8,7 @@ item object has:
  - total
  - adding (bool)
 */
+	cls: "inventoryitem",
 	className: "inventoryitem",
 	init: function(item) {
 		this.added = 0;
