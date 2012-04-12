@@ -1,21 +1,69 @@
+
+
 .inventoryitem {
-	width: 100dp
-	height: 30dp
-	background-color: red
-	layout: vertical
+	width: 150dp;
+	height: 50dp;
+	background-color: inherit;
+}
+
+.noused {
+	color: #CCC;
+}
+
+.allused {
+	color: #F00;
+}
+
+.inventoryitem .itemicon {
+	left: 5;
+	top: 5;
+}
+
+.usednumber, .usedlabel {
+	left: 65dp;
+	width: 20dp;
+}
+
+.usedlabel { left: 67dp; }
+
+.divider {
+	background-color: transparent;
+	height: 30dp;
+	top: 2dp;
+	width: 10dp;
+	left: 90dp;
+	font-size: 30dp;
+	z-index: 1;
+}
+
+.totalnumber, .totallabel {
+	left: 95dp;
+	width: 20dp;
 }
 
 .usednumber, .totalnumber {
-	width: 15dp
-	height: 15dp
+	height: 25dp;
+	width: 25dp;
+	top: 5dp;
+	text-align: center;
+	background-color: inherit;
+	font-size: 18dp;
 }
 
 .usedlabel, .totallabel {
-	width: 15dp
-	height: 15dp
-	fontSize: 10dp
+	height: 15dp;
+	width: 23dp;
+	text-align: center;
+	font-size: 11dp;
+	bottom: 5dp;
+	background-color: inherit;
 }
 
-.divider {
-	width: 5dp
+.added {
+	background-color: inherit;
+	width: 22dp;
+	left: 125dp;
+	shadow-color: #yellow;
+	shadow-size: 5dp;
+	color: #FFF;
 }

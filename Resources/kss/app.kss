@@ -1,0 +1,13 @@
+
+
+.myWindow {
+	background-color: #F00;
+}
+
+.myWindow .inventoryitem {
+	top: 5dp;
+}
+
+.hidden {
+	visible: false;
+}

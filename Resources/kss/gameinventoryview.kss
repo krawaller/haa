@@ -1,0 +1,19 @@
+.hometable, .awaytable {
+	width: 160dp;
+	top: 100dp;
+}
+
+.hometable {
+	left: 0;
+}
+
+.awaytable {
+	right: 0;
+}
+
+.inventorysectionheader {
+	text-align: center;
+	height: 12dp;
+	background-color: yellow;
+}
+

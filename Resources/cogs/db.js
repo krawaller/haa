@@ -71,13 +71,15 @@ function dbDex(opts){
 	return dbQuery(sql,mould);
 }
 
-var DBNAME = "HAA 005",
+var DBNAME = "HAA 007",
 	db = Titanium.Database.install("/cogs/heroacademyaid.sqlite", DBNAME);
 
 var datatypes = {
 	gameswithopp: ["gameid","oppname","myrace","opprace","status","gamenote","oppnote","prio"],
 	gameswithusesoverview: ["gameid","oppname","myrace","opprace","status","gamenote","oppnote","prio","myused","mytotal","oppused","opptotal"],
-	gamestocks: ["gameid","race","home","isme","kind","name","itemid","total","used","note","prio"]
+	gamestocks: ["gameid","race","home","isme","kind","name","itemid","total","used","note","prio"],
+	useswithitems: ["turnid","itemid","kind","name","race","amount","total"],
+	turnswithinfo: ["turnid","gameid","home","oppname","isme","race","prio"]
 };
 
 exports.db = db;
@@ -88,9 +90,9 @@ function getItems(datatype,opts){
 	opts.table = datatype;
 	return dbDex(opts);
 };
-
+exports.getItems = getItems;
 exports.getCurrentGames = function() {
-	return getItems("games withopp",{
+	return getItems("gameswithopp",{
 		condstr: "status = 0",
 		orderby: "prio",
 		orderdesc: true

@@ -7,6 +7,9 @@ exports.Class = View.extend({
 		data: datamodule.getCurrentGames().map(function(g){
 			g.type = "gamerow";
 			return K.create(g);
-		})
+		}),
+		click: function(e){
+			Ti.App.fireEvent("openedgame",{gameid:e.row.gameid});
+		}
 	}]
 });

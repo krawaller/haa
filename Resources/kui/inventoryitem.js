@@ -9,7 +9,6 @@ item object has:
  - adding (bool)
 */
 	cls: "inventoryitem",
-	className: "inventoryitem",
 	init: function(item) {
 		this.added = 0;
 		this.item = item;
@@ -20,24 +19,13 @@ item object has:
 			race: item.race,
 			kind: item.kind,
 			name: item.name
-		},{
-			type: "view",
-			layout: "horizontal",
-			children: [
-				{
-					type: "view",
-					layout: "vertical",
-					children: ["label.usednumber "+item.used, "label.usedlabel used"]
-				},
-				"label.divider /",
-				{
-					type: "view",
-					layout: "vertical",
-					children: ["label.totalnumber "+item.total, "label.totallabel total"]
-				}
-			]
 		},
-			"label.added +0"
+			"label.usednumber"+(!item.used?".noused":item.used==item.total?".allused":"")+" "+item.used,
+			"label.usedlabel used",
+			"label.divider /",
+			"label.totalnumber "+item.total,
+			"label.totallabel total",
+			"label.added"+(!item.adding?".hidden":"")+" +0"
 		];
 		this._super.call(this, item);
 	},

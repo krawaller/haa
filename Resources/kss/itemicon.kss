@@ -1,7 +1,31 @@
+
 .itemicon {
-	height: 20dp
-	width: 20dp
-	border-size: 1dp
-	border-color: black
-	background-color: red
+	background-color: #FFF;
+	height: 40dp;
+	width: 60dp;
+	border-color: #000;
+	border-width: 1dp;
+	
 }
+
+.itemiconrace {
+	top: -2;
+	height: 15dp;
+	font-size: 10dp;
+	text-align: center;
+}
+
+.itemiconkind {
+	top: 8dp;
+	height: 15dp;
+	font-size: 10dp;
+	text-align: center;
+}
+
+.itemiconname {
+	bottom: 0;
+	height: 20dp;
+	text-align: center;
+	font-size: 14dp;
+}
+

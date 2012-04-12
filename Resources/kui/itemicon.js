@@ -7,7 +7,15 @@ Itemobject has:
 	*/
 	cls: "itemicon",
 	init: function(item) {
-		this.children = ["label "+item.name];
+		var races = ["council","darkelf","dwarves","tribe"],
+			kinds = ["unit","gear","spell"];
+		this.children = [
+			"label.itemiconrace "+races[item.race],
+			"label.itemiconkind "+kinds[item.kind],
+			"label.itemiconname "+item.name
+		];
+		this.height = 100;
+		this.width = 100; 
 		this._super.call(this, item);
 	}
 });
