@@ -9,20 +9,22 @@ exports.Class = TableViewRow.extend({
 		items = [];
 		n = 0;
 		uses.forEach(function(item){
+			var o = null;
 			item.used = item.amount;
 			while(item.used--){
-				items.push({
+				o = {
 					type: "itemicon",
 					name: item.name,
 					race: item.race,
-					kind: item.kind,
-					left: n*65
-				});
+					kind: item.kind
+				};
+				o[turn.home?"left":"right"] = n*63+3;
+				items.push(o);
 				n++;
 			}
 		});
-		Ti.API.log(items);
-		this.children = items;
+		lbltxt = (turn.isme?"my ":turn.oppname)+" "+["council","darkelf","dwarves","tribe"][turn.race]+" team used";
+		this.children = ["label.turninfo"+(turn.home?".home":".away")+" "+lbltxt].concat(items);
 		this._super.call(this, turn);
 	}
 });

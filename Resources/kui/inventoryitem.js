@@ -1,4 +1,4 @@
-exports.Class = View.extend({
+exports.Class = TableViewRow.extend({
 /*
 item object has:
  - race
@@ -25,22 +25,30 @@ item object has:
 			"label.divider /",
 			"label.totalnumber "+item.total,
 			"label.totallabel total",
-			"label.added"+(!item.adding?".hidden":"")+" +0"
+			"label.added"
 		];
 		this._super.call(this, item);
 	},
-	add: function(){ // should be clickhander on whole shebang!
-		if (this.adding){
-			var lbl = $$(".added")[0];
-			if (this.added == this.canadd){
-				this.added = 0;
-				lbl.visible = false;
-			} else {
-				this.added += 1;
-				lbl.text = "+"+this.added;
-				lbl.visible = true;
-			}
+	updateAddLabel: function(amount){
+		var lbl = $(".added",this)[0];
+		if (!amount){
+			lbl.visible = false;
+		} else {
+			lbl.text = "+"+amount;
+			lbl.visible = true;
 		}
+	},
+	resetUses: function(e){
+		this.added = 0;
+		this.updateAddLabel(0);
+	},
+	addUse: function(e){
+		if (this.added === this.canadd){
+			this.added = 0;
+		} else {
+			this.added += 1;
+		}
+		this.updateAddLabel(this.added);
 	},
 	getTotalAdded: function(){
 		return this.added;

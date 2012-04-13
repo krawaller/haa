@@ -1,3 +1,26 @@
 .turnrow {
-	height: 50dp;
+	height: 65dp;
+}
+
+.turnrow .itemicon {
+	top: 20dp;
+}
+
+.turninfo {
+	font-size: 12dp;
+	height: 15dp;
+	top: 0;
+	left: 5dp;
+	right: 5dp;
+}
+
+.home {
+	text-align: left;
+	color: #00F;
+}
+
+.away {
+	text-align: right;
+	color: #F00;
+	right: 0;
 }

@@ -17,3 +17,17 @@
 	background-color: yellow;
 }
 
+.homebutton, .awaybutton {
+	top: 30dp;
+	width: 120dp;
+	height: 25dp;
+	font-size: 11dp;
+}
+
+.homebutton {
+	left: 20dp;
+}
+
+.awaybutton {
+	right: 20dp;
+}

@@ -41,7 +41,7 @@ var tabs = K.createTabGroup({
 				race: 0,
 				kind: 0,
 				name: "soldier",
-				used: 2,
+				used: 1,
 				total: 3,
 				adding: true,
 				top: 5
@@ -69,10 +69,8 @@ var tabs = K.createTabGroup({
 	},{
 		cls: 'myTab',
 		window: {
-			children: [{
-				type: "gameturnlist",
-				gameid: 1
-			}]
+			type: "gameturnlist",
+			gameid: 1
 		}
 	}]
 });

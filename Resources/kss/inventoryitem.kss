@@ -65,5 +65,5 @@
 	left: 125dp;
 	shadow-color: #yellow;
 	shadow-size: 5dp;
-	color: #FFF;
+	color: magenta;
 }

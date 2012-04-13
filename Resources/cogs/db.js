@@ -98,5 +98,20 @@ exports.getCurrentGames = function() {
 		orderdesc: true
 	});
 };
-
+exports.addItemUses = function(gameid,side,uses){
+	dbOperation("INSERT INTO turns (gameid,home,prio) VALUES (?, ?, ?)",[
+		gameid, side == "home" ? 1 : 0, 666
+	]);
+	var turnid = dbSinglePropQuery("SELECT max(id) as turnid FROM turns","turnid");
+	for(var i = 0; i<uses.length;i++){
+		var use = uses[i]
+		dbOperation("INSERT INTO uses (turnid,itemid,amount,kind) VALUES (?,?,?,?)",[
+			turnid, use.itemid, use.amount, use.kind
+		]);
+	}
+}
+exports.deleteTurn = function(turnid){
+	dbOperation("DELETE FROM turns WHERE id = ?",[turnid]);
+	dbOperation("DELETE FROM uses WHERE turnid = ?",[turnid]);
+}
 exports.poop = "scoop";
