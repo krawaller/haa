@@ -1,0 +1,9 @@
+.statrow > .name {
+	width: 100dp;
+	left: 10dp;
+}
+
+.statrow > .current { left: 100dp; }
+.statrow > .won { left: 150dp; }
+.statrow > .draw { left: 200dp; }
+.statrow > .loss { left: 250dp; }

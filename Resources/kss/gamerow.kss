@@ -1,0 +1,50 @@
+.gamerow {
+	height: 50dp;
+}
+
+.gamerow > .vs {
+	top: 5dp;
+	font-size: 20dp;
+	height: 28dp;
+	width: 30dp;
+	font-weight: bold;
+	color: #000;
+}
+
+.gamerow > .status {
+	bottom: 8dp;
+	height: 15dp;
+	font-size: 10dp;
+	font-weight: bold;
+	width: 40dp;
+	color: #777;
+}
+
+.gamerow > .name {
+	font-size: 16dp;
+	height: 20dp;
+	width: 150dp;
+	top: 8dp;
+	background-color: inherit;
+	text-align: center;
+	font-weight: bold;
+}
+
+
+.gamerow > .race {
+	font-size: 12dp;
+	width: 150dp;
+	top: 20dp;
+	background-color: inherit;
+	text-align: center;
+	color: black;
+}
+.gamerow > .myname {
+	color: inherit;
+	color: #23D
+}
+
+.gamerow > .homename { left: 3dp; }
+.gamerow > .homerace { left: 3dp; }
+.gamerow > .awayname { right: 3dp; }
+.gamerow > .awayrace { right: 3dp; }

@@ -1,0 +1,5 @@
+.statsectionheader {
+	height: 20dp;
+	background-color: #CCC;
+	text-align: center;
+}

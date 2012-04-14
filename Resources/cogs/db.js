@@ -76,10 +76,12 @@ var DBNAME = "HAA 007",
 
 var datatypes = {
 	gameswithopp: ["gameid","oppname","myrace","opprace","status","gamenote","oppnote","prio"],
-	gameswithusesoverview: ["gameid","oppname","myrace","opprace","status","gamenote","oppnote","prio","myused","mytotal","oppused","opptotal"],
+	gameswithusesoverview: ["gameid","home","oppname","myrace","opprace","status","gamenote","oppnote","prio","myused","mytotal","oppused","opptotal"],
 	gamestocks: ["gameid","race","home","isme","kind","name","itemid","total","used","note","prio"],
 	useswithitems: ["turnid","itemid","kind","name","race","amount","total"],
-	turnswithinfo: ["turnid","gameid","home","oppname","isme","race","prio"]
+	turnswithinfo: ["turnid","gameid","home","oppname","isme","race","prio"],
+	oppresultoverview: ["oppid","oppname","ongoing","wins","stalemates","losses"],
+	myresultsoverview: ["what","ongoing","wins","stalemates","losses"] // what = [total,darkelfall,]
 };
 
 exports.db = db;
@@ -109,9 +111,11 @@ exports.addItemUses = function(gameid,side,uses){
 			turnid, use.itemid, use.amount, use.kind
 		]);
 	}
+	Ti.App.fireEvent("gamedatachanged",{because:"usesregistered"});
 }
 exports.deleteTurn = function(turnid){
 	dbOperation("DELETE FROM turns WHERE id = ?",[turnid]);
 	dbOperation("DELETE FROM uses WHERE turnid = ?",[turnid]);
+	Ti.App.fireEvent("gamedatachanged",{because:"turndeleted"});
 }
 exports.poop = "scoop";

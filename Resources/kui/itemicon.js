@@ -14,8 +14,6 @@ Itemobject has:
 			"label.itemiconkind "+kinds[item.kind],
 			"label.itemiconname "+item.name
 		];
-		this.height = 100;
-		this.width = 100; 
 		this._super.call(this, item);
 	}
 });

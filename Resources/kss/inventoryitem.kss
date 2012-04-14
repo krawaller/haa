@@ -20,24 +20,22 @@
 }
 
 .usednumber, .usedlabel {
-	left: 65dp;
+	left: 75dp;
 	width: 20dp;
 }
-
-.usedlabel { left: 67dp; }
 
 .divider {
 	background-color: transparent;
 	height: 30dp;
 	top: 2dp;
 	width: 10dp;
-	left: 90dp;
+	left: 100dp;
 	font-size: 30dp;
 	z-index: 1;
 }
 
 .totalnumber, .totallabel {
-	left: 95dp;
+	left: 105dp;
 	width: 20dp;
 }
 
@@ -56,13 +54,14 @@
 	text-align: center;
 	font-size: 11dp;
 	bottom: 5dp;
+	color: #777;
 	background-color: inherit;
 }
 
 .added {
 	background-color: inherit;
 	width: 22dp;
-	left: 125dp;
+	left: 135dp;
 	shadow-color: #yellow;
 	shadow-size: 5dp;
 	color: magenta;

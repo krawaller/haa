@@ -1,6 +1,18 @@
 datamodule = require("/cogs/db");
 
-exports.Class = View.extend({
+exports.Class = Window.extend({
+	cls: "gameinventory",
+	title: "Game inventory",
+	events: {
+		app: {
+			"gamedatachanged": function(e){
+				if (e.because != "usesregistered"){
+					this.updateSide("home");
+					this.updateSide("away");
+				}
+			}
+		}
+	},
 	loadData: function(){
 		var stocks = datamodule.getItems("gamestocks",{condstr: "gameid = "+this.gameid}),
 			home = {units: [], gear: [], spells: []},
@@ -34,35 +46,33 @@ exports.Class = View.extend({
 		return sec;
 	},
 	init: function(opts){ // called with gameid
-		game = datamodule.getItems("gameswithopp",{condstr: "gameid = "+opts.gameid});
+		game = datamodule.getItems("gameswithusesoverview",{condstr: "gameid = "+opts.gameid})[0];
 		this.gameid = opts.gameid;
 		this.game = game;
-		var hometable = K.create("tableview.hometable"),
-			awaytable = K.create("tableview.awaytable"),
-			homebtn = K.create("button.homebutton"),
-			awaybtn = K.create("button.awaybutton");
-		this.tables = {
-			home: hometable,
-			away: awaytable
-		};
-		this.loadData();
-		this.updateTable("home");
-		this.updateTable("away");
-		this.children = [hometable,awaytable,homebtn,awaybtn];
-		this.home = 0;
-		this.away = 0;
-		this._super.call(this, opts);
+		this.tables = {};
+		this.btns = {};
+		game.type = "gamerow"
+		controls = [K.create(game),{
+			type: "button",
+			cls: "toturnlistbutton",
+			click: function(e){Ti.App.fireEvent("openedturnlist",{gameid:opts.gameid})}
+		}];
 		me = this;
-		this.btns = {
-			home: homebtn,
-			away: awaybtn
-		};
-		hometable.addEventListener("click",function(e){ me.receiveClick("home",e.row); });
-		awaytable.addEventListener("click",function(e){ me.receiveClick("away",e.row); });
-		homebtn.addEventListener("click",function(e){ me.submitClick("home"); });
-		awaybtn.addEventListener("click",function(e){ me.submitClick("away"); });
-		this.updateButton(homebtn,0);
-		this.updateButton(awaybtn,0);
+		this.loadData();
+		["home","away"].forEach(function(side){
+			var table = K.create("tableview."+side+"table"),
+				btn = K.create("button."+side+"button");
+			me.tables[side] = table;
+			me.btns[side] = btn;
+			controls = controls.concat([table,btn]);
+			table.addEventListener("click",function(e){ me.receiveItemClick(side,e.row); });
+			btn.addEventListener("click",function(e){ me.submitClick(side); });
+			me.updateButton(btn,0);
+			me.updateTable(side);
+			me[side] = 0; 
+		});
+		this.children = controls;
+		this._super.call(this, opts);
 	},
 	submitClick: function(side){
 		var table = this.tables[side],
@@ -71,29 +81,33 @@ exports.Class = View.extend({
 			sidenum = {home:1,away:0}[side],
 			uses = [];
 		for(var s=0;s<sections.length;s++){
-			var sec = sections[s],
-				rows = sec.rows;
+			var sec = sections[s],rows = sec.rows;
 			for(var r=0;r<rows.length;r++){
-				var row = rows[r],
-					added = row.added,
-					item = row.item;
+				var row = rows[r],added = row.added,item = row.item;
 				if (added){
-					uses.push({
-						amount: added,
-						itemid: item.itemid,
-						kind: item.kind
-					})
+					uses.push({amount: added,itemid: item.itemid,kind: item.kind})
 					row.resetUses();
 				}
 			}
 		}
 		datamodule.addItemUses(this.gameid,side,uses);
+		this.updateSide(side);
+	},
+	updateSide: function(side){
 		this[side] = 0;
 		this.updateButton(this.btns[side],0);
 		this.loadData();
 		this.updateTable(side);
+		var label = $("."+side+"race",this.children[0])[0];
+		var game = datamodule.getItems("gameswithusesoverview",{condstr: "gameid = "+this.gameid})[0];
+		if (side=="home"){
+			amount = game.home ? game.myuses : game.oppuses;
+		} else {
+			amount = game.home ? game.oppuses : game.myuses;
+		}
+		label.text = label.text.replace(/\(\d*\)$/,"("+amount+")");
 	},
-	receiveClick: function(side,row){
+	receiveItemClick: function(side,row){
 		var item = row.item,
 			side = ["away","home"][row.home];
 		if (row.added === row.canadd){
@@ -112,9 +126,11 @@ exports.Class = View.extend({
 		if(nbr === 0){
 			btn.title = "select items below";
 			btn.setEnabled(false);
+			btn.color = "#BBB";
 		} else {
 			btn.title = "submit "+nbr+" item"+(nbr>1?"s":"");
 			btn.setEnabled(true);
+			btn.color = "#000";
 		}
 	}
 });

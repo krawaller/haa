@@ -1,0 +1,12 @@
+.gameturnlist .instruction {
+	top: 0;
+	font-size: 12;
+	height: 50dp;
+	left: 3dp;
+	right: 3dp;
+	background-color: inherit;
+}
+
+.gameturnlist .turntable {
+	top: 55dp;
+}

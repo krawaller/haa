@@ -13,6 +13,7 @@
 	height: 15dp;
 	font-size: 10dp;
 	text-align: center;
+	color: #777;
 }
 
 .itemiconkind {
@@ -20,12 +21,13 @@
 	height: 15dp;
 	font-size: 10dp;
 	text-align: center;
+	color: #777;
 }
 
 .itemiconname {
 	bottom: 0;
 	height: 20dp;
 	text-align: center;
-	font-size: 14dp;
+	font-size: 13dp;
 }
 

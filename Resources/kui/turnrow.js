@@ -4,7 +4,9 @@ exports.Class = TableViewRow.extend({
 	cls: "turnrow",
 	init: function(turn) {
 		uses = datamodule.getItems("useswithitems",{
-			condstr: "turnid = "+turn.turnid
+			condstr: "turnid = "+turn.turnid,
+			orderby: "turnid",
+			orderdesc: true
 		});
 		items = [];
 		n = 0;
