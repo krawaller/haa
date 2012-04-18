@@ -1,0 +1,23 @@
+.gameinventory > .gamerow {
+	top: 5dp;
+}
+
+.homebutton, .awaybutton, .toturnlistbutton {
+	top: 70dp;
+	width: 120dp;
+	height: 25dp;
+	font-size: 11dp;
+}
+
+.toturnlistbutton {
+	width: 60dp;
+	title: turns;
+}
+
+.homebutton {
+	left: 5dp;
+}
+
+.awaybutton {
+	right: 5dp;
+}

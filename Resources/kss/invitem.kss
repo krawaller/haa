@@ -1,0 +1,37 @@
+.invitem {
+	width: 70dp;
+	height: 35dp;
+	border-color: #000;
+	border-width: 1dp;
+	background-color: inherit;
+}
+
+.invitem > .name {
+	top: 0;
+	height: 20dp;
+	text-align: left;
+	left: 5dp;
+	font-size: 13dp;
+}
+
+.invitem > .used {
+	bottom: 3dp;
+	height: 15dp;
+	left: 5dp;
+	text-align: left;
+	font-size: 13dp;
+	color: #555;,
+}
+
+
+.invitem > .added {
+	background-color: inherit;
+	width: 20dp;
+	font-size: 14dp;
+	height: 14dp;
+	bottom: 5dp;
+	right: -2dp;
+	shadow-color: #yellow;
+	shadow-size: 5dp;
+	color: magenta;
+}

@@ -9,7 +9,7 @@ var tabs = K.createTabGroup({
 		app: {
 			"openedgame": function(e){
 				mywin = K.create({
-					type: "gameinventoryview",
+					type: "gameinventoryview2",
 					gameid: e.gameid
 				});
 				tabs.activeTab.open(mywin);
@@ -23,6 +23,27 @@ var tabs = K.createTabGroup({
 		}
 	},
 	tabs: [{
+		title: "test",
+		window: {
+			type: "window",
+			title: "WTF",
+			children: [{
+				type: "invitem",
+				name: "poobit",
+				used: 2,
+				total: 3,
+				usenumber: 2,
+				top: 20
+			},{
+				type: "view",
+				width: 20,
+				height: 20,
+				bottom: 20,
+				right: 20,
+				backgroundColor: "blue"
+			}]
+		}
+	},{
 		title: "ongoing",
 		window: { type: "gamelistview" }
 	},{ 

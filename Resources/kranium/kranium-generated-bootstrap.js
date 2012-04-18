@@ -6,6 +6,6 @@
     global.TEST = undefined;
     global.BOOTSTRAPPED = true;
 if(K.is.ios){
-    K.watch("192.168.0.47", "8128");
+    K.watch("127.0.0.1", "8128");
 }
 })(this);
