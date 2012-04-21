@@ -9,14 +9,14 @@ var tabs = K.createTabGroup({
 		app: {
 			"openedgame": function(e){
 				mywin = K.create({
-					type: "gameinventoryview2",
+					type: "inventorywin",
 					gameid: e.gameid
 				});
 				tabs.activeTab.open(mywin);
 			},
 			"openedturnlist": function(e){
 				tabs.activeTab.open(K.create({
-					type: "gameturnlist",
+					type: "turnlistwin",
 					gameid: e.gameid
 				}))
 			},
@@ -60,7 +60,7 @@ var tabs = K.createTabGroup({
 		}
 	},{ 
 		title: "statistics",
-		window: { type: "stats" }
+		window: { type: "statswin" }
 	}]
 });
 

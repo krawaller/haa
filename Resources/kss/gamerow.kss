@@ -18,6 +18,7 @@
 	font-weight: bold;
 	width: 40dp;
 	color: #777;
+	text-align: center;
 }
 
 .gamerow > .name {

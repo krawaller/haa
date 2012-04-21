@@ -17,3 +17,8 @@
 	background-color: #CCC;
 	text-align: center;
 }
+
+.nogamesrow {
+	text-align: center;
+	color: #777;
+}
