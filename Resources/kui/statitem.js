@@ -9,8 +9,8 @@ exports.Class = View.extend({
 	},
 	events: {
 		click: function(e){
-			alert(this.condstr+" - "+this.header);
-			Ti.App.fireEvent("opengames",{constr: this.condstr,header: this.header});
+			//alert(this.condstr+" - "+this.header);
+			Ti.App.fireEvent("openedgamelist",{condstr: this.condstr,header: this.header});
 		}
 	}
 });

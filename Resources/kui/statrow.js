@@ -6,8 +6,8 @@ exports.Class = TableViewRow.extend({
 			cls: "name",
 			text: data.name,
 			click: function(e){
-				alert(data.condstr+" - "+data.header);
-				Ti.App.fireEvent("opengames",{constr: data.condstr,header: data.header});
+				//alert(data.condstr+" - "+data.header);
+				Ti.App.fireEvent("openedgamelist",{condstr: data.condstr,header: "all "+data.header});
 			}
 		},{
 			type: "statitem",

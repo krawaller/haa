@@ -32,25 +32,25 @@ exports.Class = Window.extend({
 						total.push(o);
 						break;
 					case "councilall":
-						o.condstr = "race = 0";
+						o.condstr = "myrace = 0";
 						o.name = "council";
 						o.header = "with council";
 						races.push(o);
 						break;
 					case "darkelfall":
-						o.condstr = "race = 1";
+						o.condstr = "myrace = 1";
 						o.name = "darkelf";
 						o.header = "with darkelf";
 						races.push(o);
 						break;
 					case "dwarfall":
-						o.condstr = "race = 2";
+						o.condstr = "myrace = 2";
 						o.name = "dwarves";
 						o.header = "with dwarves";
 						races.push(o);
 						break;
 					case "tribeall":
-						o.condstr = "race = 3";
+						o.condstr = "myrace = 3";
 						o.name = "tribe";
 						o.header = "with tribe";
 						races.push(o);
@@ -66,7 +66,7 @@ exports.Class = Window.extend({
 	buildSection: function(name,arr){
 		sec = K.create({
 			type: "tableviewsection",
-			headerView: "label.statsectionheader "+name
+			headerView: "label.tablesectionheader "+name
 		});
 		arr.forEach(function(item){
 			item.type = "statrow";

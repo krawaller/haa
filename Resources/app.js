@@ -19,6 +19,14 @@ var tabs = K.createTabGroup({
 					type: "gameturnlist",
 					gameid: e.gameid
 				}))
+			},
+			"openedgamelist": function(e){
+				tabs.activeTab.open(K.create({
+					type: "gamelistwin",
+					condstr: e.condstr,
+					header: e.header,
+					gameid: e.gameid
+				}))
 			}
 		}
 	},
@@ -45,7 +53,11 @@ var tabs = K.createTabGroup({
 		}
 	},{
 		title: "ongoing",
-		window: { type: "gamelistview" }
+		window: {
+			type: "gamelistwin",
+			header: "Current",
+			condstr: "status = 0"
+		}
 	},{ 
 		title: "statistics",
 		window: { type: "stats" }

@@ -71,12 +71,12 @@ function dbDex(opts){
 	return dbQuery(sql,mould);
 }
 
-var DBNAME = "HAA 008",
+var DBNAME = "HAA 009",
 	db = Titanium.Database.install("/cogs/heroacademyaid.sqlite", DBNAME);
 
 var datatypes = {
 	gameswithopp: ["gameid","oppname","myrace","opprace","status","gamenote","oppnote","prio"],
-	gameswithusesoverview: ["gameid","home","oppname","myrace","opprace","status","gamenote","oppnote","prio","myused","mytotal","oppused","opptotal"],
+	gameswithusesoverview: ["gameid","home","oppname","oppid","myrace","opprace","status","gamenote","oppnote","prio","myused","mytotal","oppused","opptotal"],
 	gamestocks: ["gameid","race","home","isme","kind","name","itemid","total","used","note","prio"],
 	useswithitems: ["turnid","itemid","kind","name","race","amount","total","prioruses"],
 	turnswithinfo: ["turnid","gameid","home","oppname","isme","race","prio"],

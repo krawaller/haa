@@ -11,3 +11,9 @@
 .hidden {
 	visible: false;
 }
+
+.tablesectionheader {
+	height: 20dp;
+	background-color: #CCC;
+	text-align: center;
+}
