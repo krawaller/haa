@@ -1,0 +1,14 @@
+/********************************** GAMEEDIT **************************
+
+.editgamewin > .opproll {
+	top: 80dp;
+}
+
+.editgamewin > .oppfield {
+	borderStyle: Titanium.UI.INPUT_BORDERSTYLE_ROUNDED;
+	height: 40dp;
+	top: 18dp;
+	hintText: opponent name;
+}
+
+*/

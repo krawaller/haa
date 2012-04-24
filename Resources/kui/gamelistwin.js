@@ -18,6 +18,15 @@ exports.Class = Window.extend({
 		this.table = tbl;
 		this.children = [tbl];
 		this.updateTable();
+		if (opts.allowAdd){
+			this.rightNavButton = K.create({
+				type: "button",
+				title: "new",
+				click: function(){
+					Ti.App.fireEvent("editgame",{});
+				}
+			});
+		}
 		this._super.call(this, opts);
 	},
 	updateTable: function(){
@@ -38,7 +47,7 @@ exports.Class = Window.extend({
 			rows: rows.length ? rows : [K.create({
 				type: "tableviewrow",
 				isnogamewarning: true,
-				children: ["label.nogamesrow (no games to list)"]
+				children: ["label.emptytablerow (no games to list)"]
 			})]
 		});
 		this.table.setData([section]);

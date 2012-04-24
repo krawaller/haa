@@ -12,13 +12,13 @@
 	top: 0dp;
 }
 
-.home {
+.turnrowme {
 	text-align: left;
 	color: #00F;
 	left: 5dp;
 }
 
-.away {
+.turnrowopp {
 	text-align: right;
 	color: #F00;
 	right: 5dp;

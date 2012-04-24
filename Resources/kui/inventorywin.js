@@ -2,13 +2,15 @@ datamodule = require("/cogs/db");
 
 exports.Class = Window.extend({
 	cls: "gameinventory",
-	title: "Game inventory",
+	title: "Game",
 	events: {
 		app: {
-			"gamedatachanged": function(e){
-				if (e.because != "usesregistered"){
-					this.updateSide("home");
-					this.updateSide("away");
+			gamedatachanged: function(e){
+				if (e.because === "gamedeleted"){
+					this.close();
+				} else if (e.because !== "usesregistered"){
+					this.updateSide("me");
+					this.updateSide("opp");
 				}
 			}
 		},
@@ -21,14 +23,14 @@ exports.Class = Window.extend({
 			condstr: "gameid = "+this.gameid,
 			orderby: "kind"
 		}),
-			home = {},
-			away = {};
+			me = {},
+			opp = {};
 		stocks.map(function(item){
-			(item.home?home:away)[item.name] = item;
+			(item.isme?me:opp)[item.name] = item;
 		});
 		this.stockData = {
-			home: home,
-			away: away
+			me: me,
+			opp: opp
 		};
 	},
 	buildInvs: function(side){
@@ -42,9 +44,10 @@ exports.Class = Window.extend({
 				type: "invitem",
 				name: item.name,
 				used: item.used,
+				kind: item.kind,
 				total: item.total,
 				top: Math.floor(i/2)*39 + 120,
-				left: (i%2)*75 + {home:5,away:170}[side]
+				left: (i%2)*75 + {me:5,opp:170}[side]
 			});
 			inv.item = item;
 			inv.addEventListener("click",(function(o,s){return function(e){
@@ -71,7 +74,7 @@ exports.Class = Window.extend({
 		game = datamodule.getItems("gameswithusesoverview",{condstr: "gameid = "+opts.gameid})[0];
 		this.gameid = opts.gameid;
 		this.game = game;
-		this.invs = {home:{},away:{}};
+		this.invs = {me:{},opp:{}};
 		this.btns = {};
 		game.type = "gamerow";
 		game.top = 5;
@@ -83,7 +86,7 @@ exports.Class = Window.extend({
 		}];
 		me = this;
 		this.loadData();
-		["home","away"].forEach(function(side){
+		["me","opp"].forEach(function(side){
 			var btn = K.create("button."+side+"button"),
 				invs = me.buildInvs(me.stockData[side],side)
 			me.btns[side] = btn;
@@ -94,9 +97,45 @@ exports.Class = Window.extend({
 			me[side] = 0; 
 		});
 		this.children = controls;
+		this.rightNavButton = K.create({
+			type: "view",
+			height: 25,
+			width: 100,
+			children: [{
+				type: "button",
+				height: 25,
+				width: 40,
+				title: "del",
+				style: Titanium.UI.iPhone.SystemButtonStyle.DELETE,
+				left: 0,
+				click: function(e){
+					K.create({
+						type: "optiondialog",
+						cancel: 1,
+						destructive: 0,
+						options: ["delete","cancel"],
+						click: function(e){
+							if (e.index===0){
+								datamodule.deleteGame(opts.gameid);
+							}
+						}
+					}).show();
+				}
+			},{
+				type: "button",
+				height: 25,
+				width: 40,
+				style: Titanium.UI.iPhone.SystemButtonStyle.EDIT,
+				title: "edit",
+				click: function(e){
+					Ti.App.fireEvent("editgame",{gameid: opts.gameid})
+				},
+				right: 0
+			}]
+		});
 		this._super.call(this, opts);
-		this.updateInvs("home");
-		this.updateInvs("away");
+		this.updateInvs("me");
+		this.updateInvs("opp");
 	},
 	submitClick: function(side){
 		var uses = [], invs = this.invs[side], inv, item, added;
@@ -118,14 +157,13 @@ exports.Class = Window.extend({
 		this.updateButton(this.btns[side],0);
 		this.loadData();
 		this.updateInvs(side);
-		var label = $("."+side+"race",this.children[0])[0];
 		var game = datamodule.getItems("gameswithusesoverview",{condstr: "gameid = "+this.gameid})[0];
-		if (side=="home"){
-			amount = (game.home ? game.mytotal-game.myused : game.opptotal-game.oppused);
+		if (side==="me"){
+			amount = game.mytotal-game.myused;
 		} else {
-			amount = (game.home ? game.opptotal-game.oppused : game.mytotal-game.myused);
+			amount = game.opptotal-game.oppused;
 		}
-		label.text = label.text.replace(/\(\d*\)$/,"("+amount+")");
+		this.children[0][(side==="me"?"updateMyUses":"updateOppUses")](amount);
 	},
 	receiveItemClick: function(side,row){
 		var item = row.item;

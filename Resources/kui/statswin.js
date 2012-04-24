@@ -70,8 +70,7 @@ exports.Class = Window.extend({
 		});
 		arr.forEach(function(item){
 			item.type = "statrow";
-			var row = K.create(item);
-			sec.add(row);
+			sec.add(K.create(item));
 		});
 		return sec;
 	},

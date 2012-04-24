@@ -19,6 +19,7 @@ item object has:
 			K.create("label.used"), // creating so we can access from @children
 			"label.added"
 		];
+		item.backgroundColor = ["#FEFFDB","#FFE1D4","#FFDCEA"][item.kind];
 		this._super.call(this, item);
 		this.updateUses(item);
 	},
@@ -27,6 +28,7 @@ item object has:
 			name = this.children[0],
 			txt = [],
 			remaining = item.total - item.used;
+			
 		name.setColor(remaining?"#000":"red");
 		this.canadd = remaining;
 		for(var i = 1; i<=item.total;i++){

@@ -71,10 +71,11 @@ function dbDex(opts){
 	return dbQuery(sql,mould);
 }
 
-var DBNAME = "HAA 009",
+var DBNAME = "HAA 010",
 	db = Titanium.Database.install("/cogs/heroacademyaid.sqlite", DBNAME);
 
 var datatypes = {
+	opponents: ["id","name","note"],
 	gameswithopp: ["gameid","oppname","myrace","opprace","status","gamenote","oppnote","prio"],
 	gameswithusesoverview: ["gameid","home","oppname","oppid","myrace","opprace","status","gamenote","oppnote","prio","myused","mytotal","oppused","opptotal"],
 	gamestocks: ["gameid","race","home","isme","kind","name","itemid","total","used","note","prio"],
@@ -100,9 +101,31 @@ exports.getCurrentGames = function() {
 		orderdesc: true
 	});
 };
+
+function prioritizeGame(gameid,_maxprio){
+	var currentprio = dbSinglePropQuery("SELECT prio FROM games WHERE id = ?","prio",[gameid]),
+		maxprio = _maxprio || dbSinglePropQuery("SELECT max(prio) as maxprio FROM games","maxprio");
+	dbOperation("UPDATE games SET prio = prio - 1 WHERE prio > ?",[currentprio]);
+	dbOperation("UPDATE games SET prio = ? WHERE id = ?",[maxprio,gameid]);
+}
+exports.saveGame = function(game){
+	var oppid = dbSinglePropQuery("SELECT id FROM opponents WHERE name = ?","id",[game.oppname]),
+		maxprio = dbSinglePropQuery("SELECT max(prio) as maxprio FROM games","maxprio");
+	if (!oppid){
+		dbOperation("INSERT INTO opponents (name) VALUES (?)",[game.oppname]);
+		oppid = dbSinglePropQuery("SELECT max(id) as maxid FROM opponents","maxid");
+	}
+	if (game.gameid){
+		dbOperation("UPDATE games SET opponentid = ?, opprace = ?, myrace = ?, status = ? WHERE id = ?",[oppid,game.opprace,game.myrace,game.status,game.gameid]);
+		prioritizeGame(game.gameid,maxprio);
+	} else {
+		dbOperation("INSERT INTO games (opponentid, opprace, myrace, status, prio) VALUES (?,?,?,?,?)",[oppid,game.opprace,game.myrace,game.status,maxprio||1]);
+	}
+	Ti.App.fireEvent("gamedatachanged",{because:"gamesaved"});
+};
 exports.addItemUses = function(gameid,side,uses){
-	dbOperation("INSERT INTO turns (gameid,home,prio) VALUES (?, ?, ?)",[
-		gameid, side == "home" ? 1 : 0, 666
+	dbOperation("INSERT INTO turns (gameid,isme,prio) VALUES (?, ?, ?)",[
+		gameid, side == "me" ? 1 : 0, 666
 	]);
 	var turnid = dbSinglePropQuery("SELECT max(id) as turnid FROM turns","turnid");
 	for(var i = 0; i<uses.length;i++){
@@ -118,4 +141,11 @@ exports.deleteTurn = function(turnid){
 	dbOperation("DELETE FROM uses WHERE turnid = ?",[turnid]);
 	Ti.App.fireEvent("gamedatachanged",{because:"turndeleted"});
 }
+exports.deleteGame = function(gameid){
+	dbOperation("DELETE FROM uses WHERE turnid IN (SELECT id FROM turns WHERE gameid = ?)",[gameid]);
+	dbOperation("DELETE FROM turns WHERE gameid = ?",[gameid]);
+	dbOperation("DELETE FROM games WHERE id = ?",[gameid]);
+	Ti.App.fireEvent("gamedatachanged",{because:"gamedeleted"});
+}
+
 exports.poop = "scoop";

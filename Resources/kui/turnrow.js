@@ -20,13 +20,13 @@ exports.Class = TableViewRow.extend({
 					race: item.race,
 					kind: item.kind
 				};
-				o[turn.home?"left":"right"] = n*63+3;
+				o[turn.isme?"left":"right"] = n*63+3;
 				items.push(o);
 				n++;
 			}
 		});
 		lbltxt = (turn.isme?"my ":turn.oppname)+" "+["council","darkelf","dwarves","tribe"][turn.race]+" team used";
-		this.children = ["label.turninfo"+(turn.home?".home":".away")+" "+lbltxt].concat(items);
+		this.children = ["label.turninfo.turnrow"+(turn.isme?"me":"opp")+" "+lbltxt].concat(items);
 		this._super.call(this, turn);
 	}
 });

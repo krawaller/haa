@@ -1,13 +1,4 @@
 
-
-.myWindow {
-	background-color: #F00;
-}
-
-.myWindow .inventoryitem {
-	top: 5dp;
-}
-
 .hidden {
 	visible: false;
 }
@@ -18,7 +9,175 @@
 	text-align: center;
 }
 
-.nogamesrow {
+.emptytablerow {
 	text-align: center;
 	color: #777;
+}
+
+.ctrlabel {
+	height: 15;
+	font-size: 14;
+	color: #777;
+}
+
+/******************************* Inventory view *********************************/
+
+.gameinventory > .gamerow {
+	top: 5dp;
+}
+
+.mebutton, .oppbutton, .toturnlistbutton {
+	top: 70dp;
+	width: 120dp;
+	height: 25dp;
+	font-size: 11dp;
+}
+
+.toturnlistbutton {
+	width: 60dp;
+	title: turns;
+}
+
+.mebutton {
+	left: 5dp;
+}
+
+.oppbutton {
+	right: 5dp;
+}
+
+/********************************** INVITEM ***************************/
+
+.poop {
+	background-color: red;
+}
+
+.invitem {
+	width: 70dp;
+	height: 35dp;
+	border-color: #777;
+	border-width: 1dp;
+}
+
+.invitem > .name {
+	top: 0;
+	height: 20dp;
+	text-align: left;
+	left: 5dp;
+	font-size: 13dp;
+}
+
+.invitem > .used {
+	bottom: 3dp;
+	height: 15dp;
+	left: 5dp;
+	text-align: left;
+	font-size: 13dp;
+	color: #555;,
+}
+
+
+.invitem > .added {
+	width: 20dp;
+	font-size: 14dp;
+	height: 14dp;
+	bottom: 5dp;
+	right: -2dp;
+	shadow-color: #yellow;
+	shadow-size: 5dp;
+	color: magenta;
+}
+
+/********************************** GAMEROW ***************************/
+
+.gamerow {
+	height: 50dp;
+}
+
+.gamerow > .vs {
+	top: 5dp;
+	font-size: 20dp;
+	height: 28dp;
+	width: 30dp;
+	font-weight: bold;
+	color: #000;
+}
+
+.gamerow > .status {
+	bottom: 8dp;
+	height: 15dp;
+	font-size: 10dp;
+	font-weight: bold;
+	width: 40dp;
+	color: #777;
+	text-align: center;
+}
+
+.gamerow > .name {
+	font-size: 16dp;
+	height: 20dp;
+	width: 150dp;
+	top: 8dp;
+	background-color: inherit;
+	text-align: center;
+	font-weight: bold;
+}
+
+
+.gamerow > .race {
+	font-size: 12dp;
+	width: 150dp;
+	top: 20dp;
+	background-color: inherit;
+	text-align: center;
+	color: black;
+}
+.gamerow > .myname {
+	color: inherit;
+	color: #23D
+}
+
+.gamerow > .homename { left: 3dp; }
+.gamerow > .homerace { left: 3dp; }
+.gamerow > .awayname { right: 3dp; }
+.gamerow > .awayrace { right: 3dp; }
+
+
+/********************************** STATROW ***************************/
+
+.statrow > .name {
+	width: 100dp;
+	left: 10dp;
+}
+
+.statrow > .current { left: 100dp; }
+.statrow > .won { left: 150dp; }
+.statrow > .draw { left: 200dp; }
+.statrow > .loss { left: 250dp; }
+
+
+/********************************** STATITEM ***************************/
+
+.statitem {
+	width: 50dp;
+	height: 50dp;
+}
+
+.statitem > .num {
+	height: 20dp;
+	width: 50dp;
+	font-size: 16dp;
+	top: 5dp;
+	text-align: center;
+	background-color: inherit;
+}
+
+.statitem > .lbl {
+	height: 20dp;
+	width: 50dp;
+	font-size: 10dp;
+	bottom: 3dp;
+	text-align: center;
+	color: #777;
+	background-color: inherit;
 }

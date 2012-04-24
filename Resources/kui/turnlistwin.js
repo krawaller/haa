@@ -35,9 +35,11 @@ exports.Class = Window.extend({
 				}
 			});
 		} else {
-			table.setData([{
-				title: "No uses registered"
-			}]);
+			table.setData([K.create({
+				type: "tableviewrow",
+				isnogamewarning: true,
+				children: ["label.emptytablerow (no turns to list)"]
+			})]);
 		}
 		var label = K.create("label.instruction Here you can see the individual turns added for this game. Any erroneous entries can be deleted by first touching the edit button.");
 		this.children=[label,table];

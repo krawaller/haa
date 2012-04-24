@@ -27,35 +27,27 @@ var tabs = K.createTabGroup({
 					header: e.header,
 					gameid: e.gameid
 				}))
+			},
+			"editgame": function(e){
+				tabs.activeTab.open(K.create({
+					type: "editgamewin",
+					gameid: e.gameid
+				}));
 			}
 		}
 	},
 	tabs: [{
 		title: "test",
 		window: {
-			type: "window",
-			title: "WTF",
-			children: [{
-				type: "invitem",
-				name: "poobit",
-				used: 2,
-				total: 3,
-				usenumber: 2,
-				top: 20
-			},{
-				type: "view",
-				width: 20,
-				height: 20,
-				bottom: 20,
-				right: 20,
-				backgroundColor: "blue"
-			}]
+			type: "editgamewin",
+			gameid: 1
 		}
 	},{
 		title: "ongoing",
 		window: {
 			type: "gamelistwin",
 			header: "Current",
+			allowAdd: true,
 			condstr: "status = 0"
 		}
 	},{ 
