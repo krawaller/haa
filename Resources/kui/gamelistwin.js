@@ -17,13 +17,14 @@ exports.Class = Window.extend({
 		this.headertext = opts.header;
 		this.table = tbl;
 		this.children = [tbl];
+		Ti.API.log(["WOOOO",opts.condstr]);
 		this.updateTable();
 		if (opts.allowAdd){
 			this.rightNavButton = K.create({
 				type: "button",
 				title: "new",
 				click: function(){
-					Ti.App.fireEvent("editgame",{});
+					Ti.App.fireEvent("newgame",{});
 				}
 			});
 		}

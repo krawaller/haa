@@ -19,7 +19,7 @@ exports.Class = View.extend({
 	},
 	updateData: function(game){
 		var race = ["council","darkelves","dwarves","tribe"],
-			status = ["ongoing","won","draw","lost"],
+			status = ["ongoing","won","lost","draw"],
 			lbls = this.children;
 		lbls[1].setText(race[game.myrace]+" (666)");
 		lbls[3].setText(status[game.status]);

@@ -16,10 +16,32 @@ exports.Class = Window.extend({
 		var oppstats = datamodule.getItems("oppresultoverview",{
 			orderby: "oppname"
 		}).map(function(g){
-			g.condstr = "oppid = "+g.oppid;
-			g.name = g.oppname;
-			g.header = "vs "+g.oppname;
-			return g;
+			return {
+				condstr: "oppid = "+g.oppid,
+				name: g.oppname,
+				header: "vs "+g.oppname,
+				note: g.oppnote,
+				noteid: g.oppid,
+				notekind: "enemy",
+				ongoing: g.ongoing,
+				wins: g.wins,
+				losses: g.losses
+			};
+		});
+		var mapstats = datamodule.getItems("mapresults",{
+			orderby: "mapname"
+		}).map(function(m){
+			return {
+				condstr: "mapid = "+m.mapid,
+				name: m.mapname,
+				header: "on "+m.mapname,
+				note: m.mapnote,
+				noteid: m.mapid,
+				notekind: "map",
+				ongoing: m.ongoing,
+				wins: m.wins,
+				losses: m.losses
+			}
 		});
 		var total = [],
 			races = [],
@@ -60,6 +82,7 @@ exports.Class = Window.extend({
 		this.table.setData([
 			this.buildSection("Total",total),
 			this.buildSection("Per race",races),
+			this.buildSection("Per map",mapstats),
 			this.buildSection("Per opponent",oppstats)
 		]);
 	},
@@ -76,7 +99,8 @@ exports.Class = Window.extend({
 	},
 	events: {
 		app: {
-			"oppstatschanged": function(){
+			gamedatachanged: function(){
+				Ti.API.log(["FOOOWEE",this,this.updateTable])
 				this.updateTable();
 			}
 		}

@@ -71,18 +71,21 @@ function dbDex(opts){
 	return dbQuery(sql,mould);
 }
 
-var DBNAME = "HAA 010",
+var DBNAME = "HAA 016",
 	db = Titanium.Database.install("/cogs/heroacademyaid.sqlite", DBNAME);
 
 var datatypes = {
 	opponents: ["id","name","note"],
-	gameswithopp: ["gameid","oppname","myrace","opprace","status","gamenote","oppnote","prio"],
-	gameswithusesoverview: ["gameid","home","oppname","oppid","myrace","opprace","status","gamenote","oppnote","prio","myused","mytotal","oppused","opptotal"],
+	maps: ["id","name","note"],
+	gameswithopp: ["gameid","oppname","myrace","opprace","status","gamenote","oppnote","prio","mapid","mapname","mapnote"],
+	gameswithusesoverview: ["gameid","home","oppname","oppid","myrace","opprace","status","gamenote","oppnote","prio","myused","mytotal","oppused","opptotal","mapid","mapname","mapnote"],
 	gamestocks: ["gameid","race","home","isme","kind","name","itemid","total","used","note","prio"],
 	useswithitems: ["turnid","itemid","kind","name","race","amount","total","prioruses"],
 	turnswithinfo: ["turnid","gameid","home","oppname","isme","race","prio"],
-	oppresultoverview: ["oppid","oppname","ongoing","wins","stalemates","losses"],
-	myresultsoverview: ["what","ongoing","wins","stalemates","losses"] // what = [total,darkelfall,]
+	oppresultoverview: ["oppid","oppname","ongoing","wins","losses","oppnote"],
+	myresultsoverview: ["what","ongoing","wins","losses"], // what = [total,darkelfall,]
+	mapresults: ["mapid","mapname","mapnote","ongoing","wins","losses"],
+	notes: ["noteid","kind","name","note"]
 };
 
 exports.db = db;
@@ -110,16 +113,21 @@ function prioritizeGame(gameid,_maxprio){
 }
 exports.saveGame = function(game){
 	var oppid = dbSinglePropQuery("SELECT id FROM opponents WHERE name = ?","id",[game.oppname]),
+		mapid = dbSinglePropQuery("SELECT id FROM maps WHERE name = ?","id",[game.mapname]),
 		maxprio = dbSinglePropQuery("SELECT max(prio) as maxprio FROM games","maxprio");
 	if (!oppid){
 		dbOperation("INSERT INTO opponents (name) VALUES (?)",[game.oppname]);
 		oppid = dbSinglePropQuery("SELECT max(id) as maxid FROM opponents","maxid");
 	}
+	if (!mapid){
+		dbOperation("INSERT INTO maps (name) VALUES (?)",[game.mapname]);
+		mapid = dbSinglePropQuery("SELECT max(id) as maxid FROM maps","maxid");
+	}
 	if (game.gameid){
-		dbOperation("UPDATE games SET opponentid = ?, opprace = ?, myrace = ?, status = ? WHERE id = ?",[oppid,game.opprace,game.myrace,game.status,game.gameid]);
+		dbOperation("UPDATE games SET opponentid = ?, mapid = ?, opprace = ?, myrace = ?, status = ? WHERE id = ?",[oppid,mapid,game.opprace,game.myrace,game.status,game.gameid]);
 		prioritizeGame(game.gameid,maxprio);
 	} else {
-		dbOperation("INSERT INTO games (opponentid, opprace, myrace, status, prio) VALUES (?,?,?,?,?)",[oppid,game.opprace,game.myrace,game.status,maxprio||1]);
+		dbOperation("INSERT INTO games (opponentid, mapid, opprace, myrace, status, prio) VALUES (?,?,?,?,?,?)",[oppid,mapid,game.opprace,game.myrace,game.status,maxprio||1]);
 	}
 	Ti.App.fireEvent("gamedatachanged",{because:"gamesaved"});
 };
@@ -136,6 +144,25 @@ exports.addItemUses = function(gameid,side,uses){
 	}
 	Ti.App.fireEvent("gamedatachanged",{because:"usesregistered"});
 }
+
+exports.getNote = function(id,kind){
+	if (kind === "enemy"){ kind = "opponent";}
+	return dbSinglePropQuery("SELECT note FROM notes WHERE noteid = ? and kind = ?","note",[id,kind]);
+}
+
+exports.setNote = function(id,kind,text){
+	var table = {
+		enemy: "opponents",
+		game: "games",
+		map: "maps"
+	}[kind];
+	if (!text){
+		dbOperation("DELETE FROM "+table+" WHERE id = ?",[id])
+	} else {
+		dbOperation("UPDATE "+table+" SET note = ? WHERE id = ?",[text,id])
+	}
+}
+
 exports.deleteTurn = function(turnid){
 	dbOperation("DELETE FROM turns WHERE id = ?",[turnid]);
 	dbOperation("DELETE FROM uses WHERE turnid = ?",[turnid]);

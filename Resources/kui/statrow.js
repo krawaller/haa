@@ -1,47 +1,53 @@
 exports.Class = TableViewRow.extend({
 	cls: "statrow",
 	init: function(data) {
-		this.children = [{
+		kids = []
+		if (data.note !== undefined){
+			kids.push(K.create({
+				type: "notebutton",
+				note: data.note,
+				notekind: data.notekind,
+				noteid: data.noteid,
+				left: 5
+			}));
+		}
+		kids.push({
 			type: "label",
-			cls: "name",
+			left: data.note !== undefined ? 50 : 5,
 			text: data.name,
 			click: function(e){
-				//alert(data.condstr+" - "+data.header);
 				Ti.App.fireEvent("openedgamelist",{condstr: data.condstr,header: "all "+data.header});
 			}
-		},{
+		});
+		
+		kids.push({
 			type: "statitem",
-			cls: "current",
+			cls: "currentitem",
 			number: data.ongoing,
 			label: "current",
 			left: "100dp",
 			header: "current "+data.header,
 			condstr: data.condstr + " AND status = 0"
-		},{
+		});
+		kids.push({
 			type: "statitem",
-			cls: "won",
+			cls: "wonitem",
 			number: data.wins,
 			label: "won",
 			left: "150dp",
 			header: "won "+data.header,
 			condstr: data.condstr + " AND status = 1"
-		},{
+		});
+		kids.push({
 			type: "statitem",
-			cls: "draw",
-			number: data.stalemates,
-			label: "draw",
-			left: "200dp",
-			header: "drawn "+data.header,
-			condstr: data.condstr + " AND status = 2"
-		},{
-			type: "statitem",
-			cls: "loss",
+			cls: "lossitem",
 			number: data.losses,
 			label: "lost",
-			left: "250dp",
+			left: "200dp",
 			header: "lost "+data.header,
-			condstr: data.condstr + " AND status = 3"
-		}];
+			condstr: data.condstr + " AND status = 2"
+		});
+		this.children = kids;
 		this._super.call(this, data);
 	}
 });

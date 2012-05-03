@@ -11,6 +11,8 @@ exports.Class = Window.extend({
 				} else if (e.because !== "usesregistered"){
 					this.updateSide("me");
 					this.updateSide("opp");
+					this.game = datamodule.getItems("gameswithusesoverview",{condstr: "gameid = "+this.gameid})[0];
+					this.children[0].updateData(this.game);
 				}
 			}
 		},

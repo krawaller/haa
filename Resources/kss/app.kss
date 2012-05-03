@@ -73,7 +73,7 @@
 	left: 5dp;
 	text-align: left;
 	font-size: 13dp;
-	color: #555;,
+	color: #555;
 }
 
 
@@ -150,10 +150,9 @@
 	left: 10dp;
 }
 
-.statrow > .current { left: 100dp; }
-.statrow > .won { left: 150dp; }
-.statrow > .draw { left: 200dp; }
-.statrow > .loss { left: 250dp; }
+.statrow > .currentitem { left: 200dp; }
+.statrow > .wonitem { left: 270dp; }
+.statrow > .lossitem { left: 340dp; }
 
 
 /********************************** STATITEM ***************************/
@@ -161,6 +160,7 @@
 .statitem {
 	width: 50dp;
 	height: 50dp;
+	background-color: yellow;
 }
 
 .statitem > .num {

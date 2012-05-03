@@ -7,20 +7,20 @@ var tabs = K.createTabGroup({
 	type: 'tabgroup',
 	events: {
 		app: {
-			"openedgame": function(e){
+			openedgame: function(e){
 				mywin = K.create({
 					type: "inventorywin",
 					gameid: e.gameid
 				});
 				tabs.activeTab.open(mywin);
 			},
-			"openedturnlist": function(e){
+			openedturnlist: function(e){
 				tabs.activeTab.open(K.create({
 					type: "turnlistwin",
 					gameid: e.gameid
 				}))
 			},
-			"openedgamelist": function(e){
+			openedgamelist: function(e){
 				tabs.activeTab.open(K.create({
 					type: "gamelistwin",
 					condstr: e.condstr,
@@ -28,10 +28,23 @@ var tabs = K.createTabGroup({
 					gameid: e.gameid
 				}))
 			},
-			"editgame": function(e){
+			editgame: function(e){
 				tabs.activeTab.open(K.create({
 					type: "editgamewin",
 					gameid: e.gameid
+				}));
+			},
+			newgame: function(e){
+				tabs.activeTab.open(K.create({
+					type: "newgamewin"
+				}));
+			},
+			openednote: function(e){
+				tabs.activeTab.open(K.create({
+					type: "notewin",
+					note: e.note,
+					notekind: e.notekind,
+					noteid: e.noteid
 				}));
 			}
 		}
@@ -39,8 +52,14 @@ var tabs = K.createTabGroup({
 	tabs: [{
 		title: "test",
 		window: {
-			type: "editgamewin",
-			gameid: 1
+			type: "window",
+			children: [{
+				type: "notebutton",
+				notekind: "whoop",
+				note: "dsa",
+				top: 30,
+				left: 30
+			}]
 		}
 	},{
 		title: "ongoing",
